@@ -1,5 +1,8 @@
 package com.example.bookstore.controller;
 
+import com.example.bookstore.dto.BooksAndCustomerIdDto;
+import com.example.bookstore.dto.BooksPriceDto;
+import com.example.bookstore.dto.BooksPurchaseDto;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.service.BookService;
 import org.springframework.http.HttpStatus;
@@ -19,9 +22,13 @@ public class BookController {
     }
 
     @PostMapping(Endpoint.SAVE)
-    public ResponseEntity<Book> save(@RequestBody Book book) {
-        return new ResponseEntity<>(bookService.save(book), HttpStatus.OK);
+    public ResponseEntity<?> save(@RequestBody BooksAndCustomerIdDto booksAndCustomerIdDto) {
+        Book response = bookService.save(booksAndCustomerIdDto);
+        return response != null
+                ? new ResponseEntity<>(response, HttpStatus.OK)
+                : new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
     }
+
 
     @GetMapping(Endpoint.GET)
     public ResponseEntity<List<Book>> getAll() {
@@ -29,19 +36,27 @@ public class BookController {
     }
 
     @GetMapping(Endpoint.GET + "allByName")
-    public ResponseEntity<List<Book>> getAllByName(@RequestParam String name) {
-        return new ResponseEntity<>(bookService.findAllByName(name), HttpStatus.OK);
+    public ResponseEntity<?> getAllByName(@RequestParam String name) {
+        List<Book> response = bookService.findAllByName(name);
+        return response != null
+                ? new ResponseEntity<>(response, HttpStatus.OK)
+                : new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(Endpoint.GETBYID)
-    public ResponseEntity<Book> getById(@PathVariable(value = "id") Long id) {
-        return new ResponseEntity<>(bookService.getById(id), HttpStatus.OK);
+    public ResponseEntity<?> getById(@PathVariable(value = "id") Long id) {
+        Book response = bookService.getById(id);
+        return response != null
+                ? new ResponseEntity<>(response, HttpStatus.OK)
+                : new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(Endpoint.UPDATE)
-    public ResponseEntity<Book> update(@RequestBody Book book) {
-
-        return new ResponseEntity<>(bookService.update(book), HttpStatus.OK);
+    public ResponseEntity<?> update(@RequestBody BooksAndCustomerIdDto booksAndCustomerIdDto) {
+        Book response = bookService.save(booksAndCustomerIdDto);
+        return response != null
+                ? new ResponseEntity<>(response, HttpStatus.OK)
+                : new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(Endpoint.DELETE)
@@ -49,6 +64,22 @@ public class BookController {
         boolean response = bookService.delete(id);
         return response
                 ? new ResponseEntity<>("Book was removed by id: " + id, HttpStatus.OK)
+                : new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/booksPrice")
+    public ResponseEntity<?> getAllBooksPrice() {
+        List<BooksPriceDto> response = bookService.getAllBooksPrice();
+        return response != null
+                ? new ResponseEntity<>(response, HttpStatus.OK)
+                : new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/booksSold")
+    public ResponseEntity<?> booksSold() {
+        List<BooksPurchaseDto> response = bookService.booksSold();
+        return response != null
+                ? new ResponseEntity<>(response, HttpStatus.OK)
                 : new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
     }
 }

@@ -1,2 +1,9 @@
-package com.example.bookstore.dto;public class BooksPrice {
+package com.example.bookstore.dto;
+
+import lombok.Data;
+
+
+public interface BooksPriceDto {
+     String getName();
+     int getPrice();
 }
