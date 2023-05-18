@@ -1,6 +1,6 @@
 package com.example.bookstore.controller;
 
-import com.example.bookstore.dto.BooksAndCustomerIdDto;
+import com.example.bookstore.dto.BooksCustomerIdGenreIdDto;
 import com.example.bookstore.dto.BooksPriceDto;
 import com.example.bookstore.dto.BooksPurchaseDto;
 import com.example.bookstore.model.Book;
@@ -22,7 +22,7 @@ public class BookController {
     }
 
     @PostMapping(Endpoint.SAVE)
-    public ResponseEntity<?> save(@RequestBody BooksAndCustomerIdDto booksAndCustomerIdDto) {
+    public ResponseEntity<?> save(@RequestBody BooksCustomerIdGenreIdDto booksAndCustomerIdDto) {
         Book response = bookService.save(booksAndCustomerIdDto);
         return response != null
                 ? new ResponseEntity<>(response, HttpStatus.OK)
@@ -52,7 +52,7 @@ public class BookController {
     }
 
     @PutMapping(Endpoint.UPDATE)
-    public ResponseEntity<?> update(@RequestBody BooksAndCustomerIdDto booksAndCustomerIdDto) {
+    public ResponseEntity<?> update(@RequestBody BooksCustomerIdGenreIdDto booksAndCustomerIdDto) {
         Book response = bookService.save(booksAndCustomerIdDto);
         return response != null
                 ? new ResponseEntity<>(response, HttpStatus.OK)

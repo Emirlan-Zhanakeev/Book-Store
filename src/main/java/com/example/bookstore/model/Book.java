@@ -19,8 +19,20 @@ public class Book {
     private int price;
 
     @ManyToOne()
-    @JsonIgnore
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
+
+    @ManyToOne()
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @ManyToOne()
+    @JoinColumn(name = "sale_id")
+    private Sale sale;
+
+    @ManyToOne()
+    @JoinColumn(name = "seller_id")
+    private Seller seller;
+
 
 }

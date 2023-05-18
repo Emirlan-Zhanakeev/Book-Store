@@ -1,23 +1,17 @@
 package com.example.bookstore.model;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-@Table
-public class Customer {
+@Table(name = "Genre")
+public class Genre {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     private String name;
-    private int age;
-
-
-//    @OneToMany(mappedBy = "customer")
-//    private List<Book> books;
 
 }
