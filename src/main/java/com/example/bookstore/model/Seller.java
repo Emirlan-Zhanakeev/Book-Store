@@ -14,7 +14,7 @@ public class Seller {
     @Id
     private Long id;
     private String name;
-    private LocalDateTime enterDate;
+    private LocalDateTime firstDay;
 
     @OneToOne()
     @JoinColumn(name = "customer_id")

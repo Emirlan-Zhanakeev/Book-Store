@@ -16,8 +16,4 @@ public class Customer {
     private String name;
     private int age;
 
-
-//    @OneToMany(mappedBy = "customer")
-//    private List<Book> books;
-
 }

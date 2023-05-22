@@ -35,9 +35,9 @@ public class SaleController {
         return response != null
                 ? new ResponseEntity<>(response, HttpStatus.OK)
                 : new ResponseEntity<>("Something wrong", HttpStatus.NOT_FOUND);
-    }
+      }
 
-    @PutMapping(value = "/deleteSale/{id}")
+    @DeleteMapping(value = "/deleteSale/{id}")
     public ResponseEntity<?> deleteSale(@PathVariable Long id) {
         boolean response = (saleService.deleteSale(id));
         return response

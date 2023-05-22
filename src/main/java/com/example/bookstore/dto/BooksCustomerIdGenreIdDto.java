@@ -12,4 +12,5 @@ public class BooksCustomerIdGenreIdDto {
     private Long customer_id;
     private Long genre_id;
     private Long sale_id;
+    private Long seller_id;
 }

@@ -3,9 +3,7 @@ package com.example.bookstore.service.impl;
 import com.example.bookstore.dto.BooksCustomerIdGenreIdDto;
 import com.example.bookstore.dto.BooksPriceDto;
 import com.example.bookstore.dto.BooksPurchaseDto;
-import com.example.bookstore.model.Book;
-import com.example.bookstore.model.Customer;
-import com.example.bookstore.model.Genre;
+import com.example.bookstore.model.*;
 import com.example.bookstore.repository.BookRepository;
 import com.example.bookstore.service.BookService;
 import org.springframework.stereotype.Service;
@@ -19,12 +17,15 @@ public class BookServiceImpl implements BookService {
     private final BookRepository repository;
     private final CustomerServiceImpl customerService;
     private final GenreServiceImpl genreService;
+    private final SellerServiceImpl sellerService;
+    private final SaleServiceImpl saleService;
 
-    public BookServiceImpl(BookRepository repository, CustomerServiceImpl customerService, GenreServiceImpl genreService) {
+    public BookServiceImpl(BookRepository repository, CustomerServiceImpl customerService, GenreServiceImpl genreService, SellerServiceImpl sellerService, SaleServiceImpl saleService) {
         this.repository = repository;
         this.customerService = customerService;
-
         this.genreService = genreService;
+        this.sellerService = sellerService;
+        this.saleService = saleService;
     }
 
     public List<Book> findAllByName(String name) {
@@ -57,6 +58,8 @@ public class BookServiceImpl implements BookService {
     public void convertEntityToDto(Book book, BooksCustomerIdGenreIdDto booksAndCustomerIdDto) {
         Customer customer = customerService.getCustomerById(booksAndCustomerIdDto.getCustomer_id());
         Optional<Genre> genre = genreService.findById(booksAndCustomerIdDto.getGenre_id());
+        Optional<Sale> sale = saleService.getSaleById(booksAndCustomerIdDto.getSale_id());
+        Optional<Seller> seller = sellerService.findById(booksAndCustomerIdDto.getSeller_id());
         if (customer != null) {
         book.setId(booksAndCustomerIdDto.getId());
         book.setName(booksAndCustomerIdDto.getName());
@@ -64,6 +67,8 @@ public class BookServiceImpl implements BookService {
         book.setPrice(booksAndCustomerIdDto.getPrice());
         book.setCustomer(customer);
         book.setGenre(genre.get());
+        book.setSale(sale.get());
+        book.setSeller(seller.get());
         }
     }
 
